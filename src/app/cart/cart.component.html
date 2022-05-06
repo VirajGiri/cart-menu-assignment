@@ -1,0 +1,81 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="javascript:void(0)" routerLink="/home">Home</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mynavbar">
+        <ul class="navbar-nav me-auto">
+        </ul>
+      </div>
+    </div>
+  </nav>
+    
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="example-container mt-3">
+            <h2>Cart Items</h2>
+            <mat-form-field appearance="standard">
+                <input matInput (keyup)="applyFilter($event)" placeholder="Search Item here" #input>
+              </mat-form-field>
+              <button type="button" class="btn btn-danger" (click)="clearCartItem()">Clear Cart</button>
+            
+              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            
+                <!-- Position Column -->
+                <ng-container matColumnDef="Id">
+                  <th mat-header-cell *matHeaderCellDef> Id. </th>
+                  <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+              
+                <!-- Name Column -->
+                <ng-container matColumnDef="Item_name">
+                  <th mat-header-cell *matHeaderCellDef> Item Name </th>
+                  <td mat-cell *matCellDef="let element"> {{element.item_name}} </td>
+                </ng-container>
+              
+                <!-- Price Column -->
+                <ng-container matColumnDef="Price">
+                  <th mat-header-cell *matHeaderCellDef> Price </th>
+                  <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="btn-group btn-group-sm">
+                        <!-- <button type="button" class="btn btn-primary" (click)="addItemsTocart(element)">Add</button> -->
+                        <button type="button" class="btn btn-primary"></button>
+                        <button type="button" class="btn btn-primary" (click)="removeItemsFromCart(element)">Remove</button>
+                      </div> 
+                    </td>
+                    <td *matFooterCellDef> Total: {{ calculateTotal() }}</td>
+                  </ng-container>
+            
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+              </table>
+          </div>
+          <div class="example-container">
+            <table class="table">
+                <tfoot>
+                  <tr>
+                    <th>Items Count : </th>
+                    <th>{{totalItem()}} </th>
+                    <th>Total : {{calculateTotal()}} </th>
+                    <th>Discount: {{getDiscount(calculateTotal())}}</th>
+                  </tr>
+                </tfoot>
+            </table>
+          </div>
+          
+      </div>
+    </div>
+  </div>
+  
